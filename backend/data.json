@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Học cơ bản về Node.js và Express",
+    "status": "completed",
+    "completedAt": "2026-08-01T10:00:00.000Z"
+  },
+  {
+    "title": "Thiết kế Task Schema với Mongoose",
+    "status": "completed",
+    "completedAt": "2026-08-03T15:30:00.000Z"
+  },
+  {
+    "title": "Viết RESTful API CRUD cho Task",
+    "status": "pending",
+    "completedAt": null
+  },
+  {
+    "title": "Tích hợp JWT Authentication cho ứng dụng",
+    "status": "pending",
+    "completedAt": null
+  },
+  {
+    "title": "Viết Unit Test cho API endpoints",
+    "status": "pending",
+    "completedAt": null
+  }
+]
