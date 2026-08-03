@@ -16,6 +16,5 @@ app.use(express.json());
 //Routes
 app.use('/api/task', taskRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
+app.listen(PORT, () => { console.log(`Server listening on http://localhost:${PORT}`);
 });
