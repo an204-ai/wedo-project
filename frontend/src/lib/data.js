@@ -1,7 +1,21 @@
 const filterType = {
     all: "Tất cả",
-    active: "Đang làm",
+    pending: "Đang chờ xử lý",
     completed: "Hoàn thành",
 }
 
-export {filterType};
+const statusList = {
+    pending: "đang chờ xử lý",
+    completed: "đã hoàn thành",
+}
+
+const options = [
+    {key: 'today', label: 'Hôm nay'},
+    {key: 'week', label: 'Tuần này'},
+    {key: 'month', label: 'Tháng này'},
+    {key: 'all', label: 'Tất cả'}
+];
+
+const visibleTaskLimit = 5;
+
+export {filterType, statusList, options, visibleTaskLimit};

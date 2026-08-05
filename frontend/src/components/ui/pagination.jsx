@@ -60,7 +60,7 @@ function PaginationLink({
 
 function PaginationPrevious({
   className,
-  text = "Previous",
+  text = "Trước",
   ...props
 }) {
   return (
@@ -77,7 +77,7 @@ function PaginationPrevious({
 
 function PaginationNext({
   className,
-  text = "Next",
+  text = "Sau",
   ...props
 }) {
   return (
@@ -106,7 +106,7 @@ function PaginationEllipsis({
       )}
       {...props}>
       <MoreHorizontalIcon />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">Thêm</span>
     </span>
   );
 }

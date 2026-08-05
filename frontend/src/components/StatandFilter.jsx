@@ -3,27 +3,28 @@ import { Badge } from "./ui/badge";
 import { filterType } from "@/lib/data.js";
 import {Filter} from "lucide-react";
 
-const StatsAndFilter = ({completedTaskCout = 0, activeTaskCout = 0, filter = "all"}) => {
+const StatsAndFilter = ({completedTaskCout = 0, pendingTaskCout = 0, filter, setFilter}) => {
     return (
         <div className="flex gap-3 justify-between items-center">
             <div className="flex gap-2">
-               <Badge variant="secondary" className="bg-amber-100 text-amber-500">
-                    {activeTaskCout} Active
+               <Badge variant="secondary" className="bg-amber-100">
+                    {pendingTaskCout} {filterType.pending}
                </Badge>
-               <Badge variant="secondary" className="bg-emerald-200 text-lime-600">
-                    {completedTaskCout} Completed
+               <Badge variant="secondary" className="bg-emerald-200">
+                    {completedTaskCout} {filterType.completed}
                </Badge>
             </div>
             <div className="flex gap-2">
-               {Object.keys(filterType).map((type)=>(
+               {Object.entries(filterType).map(([key, value])=>(   
                 <Button 
-                    key={type} 
+                    key={key} 
                     size="sm" 
-                    variant={filter === type ? "default" : "outline"}
+                    onClick={() => setFilter(key)}
+                    variant={filter === key ? "default" : "outline"}
                     className="capitalize"
                 >
                     <Filter/>
-                    {type}
+                    {value}
                 </Button>
                ))}
             </div>
