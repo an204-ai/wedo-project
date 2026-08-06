@@ -1,10 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route} from "react-router";
 import { Toaster, toast } from "sonner";
 import Homepage from "./pages/Homepage";
 import NotFound from "./pages/Not-Found";
 import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { Navigate } from "react-router";
 
 function App() {
   return (
