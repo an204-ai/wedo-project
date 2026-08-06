@@ -13,11 +13,12 @@ function App() {
       <BrowserRouter>
       <Routes>
         {/* Public Routes */}
+        <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/signup" element={<SignupPage />} />
         {/* Private Routes */}
         <Route element={<ProtectedRoute/>}>
-          <Route path="/" element={<Homepage />}/>
+          <Route path="/homepage" element={<Homepage />}/>
         </Route>
         {/* Not Found */}
         <Route path="*" element={<NotFound />} />
