@@ -1,0 +1,26 @@
+import mongoose from "mongoose";
+
+const sessionSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+        unique: true,
+    },
+    refreshToken: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    },
+    expiredAt: {
+        type: Date,
+        requiresAt: true,
+    }
+}, {
+    timestamps: true
+});
+
+sessionSchema.index({ expiredAt: 1 }, { expireAfterSeconds: 0 });
+
+export default mongoose.model("Session", sessionSchema);

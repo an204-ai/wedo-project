@@ -37,6 +37,7 @@ export const getAllTask = async (req, res) => {
     try {
         const result = await Task.aggregate([
             {$match: query},
+            {$match: {userId: req.user._id}},
             {$facet: {
                 tasks: [{$sort: {createdAt: -1}}],
                 pendingTasks: [{$match: {status: "pending"}}, {$count: "count"}],
@@ -55,11 +56,12 @@ export const getAllTask = async (req, res) => {
 
 export const createTask= async (req, res) => {
     const {title} = req.body;
-    if(!title){
+    const userId = req.user._id;
+    if(!title || !userId){
         return res.status(400).json({message: "Dữ liệu đầu vào không hợp lệ"});
     }
     try {
-        const result = await Task.create({title});
+        const result = await Task.create({title, userId});
         res.status(201).json(result);
     } catch (error) {
         console.log(error);
@@ -68,10 +70,11 @@ export const createTask= async (req, res) => {
 }
 
 export const updateTask = async (req, res) => {
-    const {title,status} = req.body;
+    const {title,status,completedAt} = req.body;
     const id = req.params.id;
+    const userId = req.user._id;
     try {
-        const result = await Task.findByIdAndUpdate(id, {title,status}, {new: true});
+        const result = await Task.findOneAndUpdate({_id: id, userId}, {title, status, completedAt}, {new: true});
         if(!result){
             return res.status(404).json({message: "Không tìm thấy task"});
         }
@@ -84,8 +87,9 @@ export const updateTask = async (req, res) => {
 
 export const deteleTask = async (req, res) => {
     const id = req.params.id;
+    const userId = req.user._id;
     try {
-        const result = await Task.findByIdAndDelete(id);
+        const result = await Task.deleteOne({_id: id, userId});
         if(!result){
             return res.status(404).json({message: "Không tìm thấy task"});
         }

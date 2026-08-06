@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import { Toaster, toast } from "sonner";
 import Homepage from "./pages/Homepage";
 import NotFound from "./pages/Not-Found";
+import SigninPage from "./pages/SigninPage";
+import SignupPage from "./pages/SignupPage";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
   return (
@@ -9,7 +12,14 @@ function App() {
     <Toaster richColors/>
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        {/* Public Routes */}
+        <Route path="/signin" element={<SigninPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        {/* Private Routes */}
+        <Route element={<ProtectedRoute/>}>
+          <Route path="/" element={<Homepage />}/>
+        </Route>
+        {/* Not Found */}
         <Route path="*" element={<NotFound />} />
       </Routes>
       </BrowserRouter>

@@ -1,44 +1,32 @@
-import {Input} from "./ui/input";
-import {Card} from "./ui/card";
+import { Input } from "./ui/input";
+import { Card } from "./ui/card";
 import { Plus } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { toast } from "sonner";
-import api from "@/lib/axios";
+import useTaskStore from "@/stores/taskStore";
 
-const AddTask = ({handleAddNewTask}) => {
+const AddTask = () => {
     const [taskTitle, setTaskTitle] = useState("");
+    const { addTask } = useTaskStore();
 
-    const addTask = async() => {
-        //todo api
-        if (taskTitle.trim()){
-            try {
-                await api.post("/task", {
-                    title: taskTitle
-                });
-                toast.success("Thêm công việc thành công");
-                handleAddNewTask();
-            } catch (error) {
-                console.log(error);
-                toast.error("Lỗi khi thêm công việc");
-            }
+    const handleAddTask = async () => {
+        if (taskTitle.trim()) {
+            await addTask(taskTitle);
             setTaskTitle("");
-        } else {
-            toast.error("Vui lòng nhập tên công việc");
         }
-        
-    }
+    };
 
     const handleKeyPress = (event) => {
         if (event.key === "Enter") {
-            addTask();
+            handleAddTask();
         }
-    }
+    };
+
     return (
         <Card>
             <div className="flex flex-col gap-2 mx-2 sm:flex-row">
-                <Input 
-                    type="text" 
+                <Input
+                    type="text"
                     placeholder="Có việc gì cần làm ?"
                     className="h-12 hover:border-primary hover:shadow-md transition-shadow duration-200"
                     value={taskTitle}
@@ -48,10 +36,10 @@ const AddTask = ({handleAddNewTask}) => {
                 <Button
                     variant="default"
                     className="px-6 h-12"
-                    onClick={addTask}
+                    onClick={handleAddTask}
                     disabled={!taskTitle.trim()}
                 >
-                    <Plus/>
+                    <Plus />
                     Thêm
                 </Button>
             </div>

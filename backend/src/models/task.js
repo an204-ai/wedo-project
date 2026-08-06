@@ -6,6 +6,12 @@ const taskSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        onDelete: 'cascade',
+    },
     status: {
         type: String,
         enum: ['pending', 'completed'],
