@@ -30,8 +30,7 @@ app.use('/api/auth', authRoutes);
 
 
 //Private routes
-app.use(authMiddleware);
-app.use('/api/tasks', taskRoutes);
+app.use('/api/tasks', authMiddleware, taskRoutes);
 
 
 //Static
