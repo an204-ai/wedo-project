@@ -19,6 +19,7 @@ import { useNavigate } from "react-router";
 //Khai báo schema validation
 const signupSchema = z.object({
   userName: z.string().min(5, 'Tên ít nhất 5 kí tự'),
+  userEmail: z.string().email('Email không hợp lệ'),
   displayName: z.string().min(1, 'Tên hiển thị không được bỏ trống'),
   password: z.string().min(6, 'Mật khẩu tối thiểu 6 kí tự'),
   confirmPassword: z.string().min(1, 'Vui lòng xác nhận lại mật khẩu'),
@@ -42,8 +43,8 @@ export function SignupForm({
 
   //Hàm xử lý khi submit form
   const onSubmit = async (data) => {
-    const {userEmail, userName, displayName, password} = data;
-    await signUp(userName, userEmail, password, displayName);
+    const {userName, userEmail,displayName, password} = data;
+    await signUp(userName, userEmail,displayName, password);
     //Chuyển hướng đến trang đăng nhập
     navigate("/signin");
     
@@ -63,7 +64,7 @@ export function SignupForm({
                   Nhập thông tin đăng ký 
                 </p>
               </div>
-              {/* email 
+              {/* email */}
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input id="email" type="email" placeholder="m@example.com" {...register('userEmail')}/>
@@ -71,7 +72,7 @@ export function SignupForm({
                   {errors.userEmail && <span className="text-red-500">{errors.userEmail.message}</span>}
                 </FieldDescription>
               </Field>
-              */}
+              
               {/* name */}
               <Field>
                 <FieldLabel htmlFor="name">Tên đăng nhập</FieldLabel>

@@ -12,11 +12,11 @@ const useAuthStore = create((set, get) => ({
         accessToken: null,
     }),
     
-    signUp: async (userName, userEmail, password, displayName) => {
+    signUp: async (userName, userEmail, displayName, password) => {
         set({isLoading: true, error: null});
         try {
            //gọi api
-           const res = await signUp(userName, userEmail, password, displayName);
+           const res = await signUp(userName, userEmail, displayName, password);
            set({
             user: res.user,
             accessToken: res.accessToken,

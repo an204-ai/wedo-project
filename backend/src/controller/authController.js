@@ -22,17 +22,12 @@ export const signUp = async (req, res) => {
         } = req.body;
 
         //Kiểm tra thông tin bắt buộc
-        if (!userName || !password || !displayName) {
+        if (!userName || !password || !displayName || !userEmail) {
             return res.status(400).json({message: "Vui lòng nhập đầy đủ thông tin"});
         }
 
         //Kiểm tra username đã tồn tại chưa
-        const existingUser = await User.findOne({
-            $or: [
-                { userName },
-                { userEmail }
-            ]
-        });
+        const existingUser = await User.findOne({$or: [{userName}, {userEmail}]});
         if (existingUser) {
             return res.status(400).json({message: "Username hoặc email đã tồn tại"});
         }

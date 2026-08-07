@@ -5,12 +5,12 @@ export const signOut = async () => {
     return response.data;
 };
 
-export const signUp = async (userName, userEmail, password, displayName) => {
+export const signUp = async (userName, userEmail, displayName, password) => {
     const response = await api.post("/auth/signup", {
         userName,
         userEmail,
-        password,
         displayName,
+        password,
     }, {withCredentials: true});
     return response.data;
 }
