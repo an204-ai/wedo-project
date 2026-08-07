@@ -38,7 +38,7 @@ export function LoginForm({
     const {userName, password} = data;
     await signIn(userName, password);
     //Chuyển hướng đến trang chủ
-    navigate("/");
+    navigate("/homepage");
   };
 
   return (

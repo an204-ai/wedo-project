@@ -40,7 +40,7 @@ const useAuthStore = create((set, get) => ({
            toast.success("Chào mừng bạn đã quay lại với WeDO");
         } catch (error) {
             console.log(error);
-            toast.error(error);
+            toast.error(error.response.data.message);
         }
         finally{
             set({isLoading: false})
