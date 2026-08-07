@@ -87,7 +87,7 @@ export const signIn = async (req, res) => {
         await Session.create({
             userId: user._id,
             refreshToken,
-            expiresAt: new Date(Date.now() + REFRESH_TOKEN_TTL)
+            expiredAt: new Date(Date.now() + REFRESH_TOKEN_TTL)
         })
 
         //Trả refresh token qua cookie
@@ -145,7 +145,7 @@ export const refreshToken = async (req, res) => {
         }
 
         //Kiểm tra refresh token đã hết hạn chưa
-        if (session.expiresAt < Date.now()) {
+        if (session.expiredAt < Date.now()) {
             return res.status(401).json({message: "Token đã hết hạn"});
         }
 

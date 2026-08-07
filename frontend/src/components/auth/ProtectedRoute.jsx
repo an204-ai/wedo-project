@@ -14,7 +14,7 @@ const ProtectedRoute = () => {
       await refreshToken();
     }
 
-    if (accessToken && !user) {
+    if (useAuthStore.getState().accessToken && !user) {
       await fetchMe();
     }
     await new Promise((resolve) => setTimeout(resolve, 500));

@@ -15,7 +15,7 @@ const sessionSchema = new mongoose.Schema({
     },
     expiredAt: {
         type: Date,
-        requiresAt: true,
+        required: true,
     }
 }, {
     timestamps: true
