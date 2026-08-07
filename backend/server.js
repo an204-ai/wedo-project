@@ -7,6 +7,7 @@ import path from 'path';
 import authRoutes from "./src/routes/authRoutes.js";
 import cookieParser from 'cookie-parser';
 import { authMiddleware } from "./src/middleware/authMiddleware.js";
+import userRoutes from "./src/routes/userRoutes.js";
 
 dotenv.config();
 
@@ -22,16 +23,14 @@ app.use(cookieParser());
 
 if (process.env.NODE_ENV !== 'production') {
     app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-
 }
 
 //Public routes
 app.use('/api/auth', authRoutes);
 
-
 //Private routes
 app.use('/api/tasks', authMiddleware, taskRoutes);
-
+app.use('/api/user', authMiddleware, userRoutes);
 
 //Static
 if (process.env.NODE_ENV === 'production') {

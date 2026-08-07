@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { toast } from "sonner";
-import {signUp, signIn, signOut} from "@/services/authService.js";
+import {signUp, signIn, signOut, fetchMe, refreshAccessToken} from "@/services/authService.js";
 
 const useAuthStore = create((set, get) => ({
     user: null,
@@ -58,7 +58,35 @@ const useAuthStore = create((set, get) => ({
         } finally{
             set({isLoading: false})
         }
+    },
+
+    fetchMe: async () => {
+        try {
+            const user = await fetchMe();
+            set({user});
+        } catch (error) {
+            console.log(error);
+            set({user: null});
+            toast.error("Lỗi xảy ra khi lấy thông tin người dùng");
+        } finally{
+            set({isLoading: false})
+        }
+    },
+
+    refreshToken: async () => {
+        set({isLoading: true, error: null});
+        try {
+            const {accessToken} = await refreshAccessToken();
+            set({accessToken});
+        } catch (error) {
+            console.log(error);
+            get().clearState();
+            toast.error("Phiên đăng nhập hết hạn");
+        } finally{
+            set({isLoading: false})
+        }
     }
+    
     
 }))
 

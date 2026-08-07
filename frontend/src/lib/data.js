@@ -16,6 +16,6 @@ const options = [
     {key: 'all', label: 'Tất cả'}
 ];
 
-const visibleTaskLimit = 5;
+const visibleTaskLimit = 4;
 
 export {filterType, statusList, options, visibleTaskLimit};

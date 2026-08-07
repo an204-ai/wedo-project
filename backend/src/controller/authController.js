@@ -93,13 +93,13 @@ export const signIn = async (req, res) => {
         //Trả refresh token qua cookie
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: true,
-            sameSite: "none",
+            secure: false,
+            sameSite: "lax",
             maxAge: REFRESH_TOKEN_TTL
         })
 
-        // Trả về acessyoken qua res
-        return res.status(200).json({message: `User ${user.displayName} đăng nhập thành công`, accessToken})
+        // Trả về acesstoken qua res
+        return res.status(200).json({message: `User:  ${user} đăng nhập thành công`, accessToken})
 
     } catch (error) {
         console.error("Lỗi khi đăng nhập:", error);
@@ -117,10 +117,49 @@ export const signOut = async (req, res) => {
             await Session.deleteOne({refreshToken: token});
         }
         //XÓa refresh token trong trình duyệt
-        res.clearCookie("refreshToken");
+        res.clearCookie("refreshToken",{
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+        });
         return res.status(204).send();
     } catch (error) {
         console.error("Lỗi khi đăng xuất:", error);
         return res.status(500).json({message: `Lỗi hệ thống`});
+    }
+}
+
+export const refreshToken = async (req, res) => {
+    try {
+        //Lấy refresh token trong cookie
+        const token = req.cookies?.refreshToken;
+
+        if (!token) {
+            return res.status(401).json({message: "Token không hợp lệ"});
+        }
+
+        //Kiểm tra refresh token trong db
+        const session = await Session.findOne({refreshToken: token});
+        if (!session) {
+            return res.status(401).json({message: "Token không hợp lệ"});
+        }
+
+        //Kiểm tra refresh token đã hết hạn chưa
+        if (session.expiresAt < Date.now()) {
+            return res.status(401).json({message: "Token đã hết hạn"});
+        }
+
+        //Nếu refresh token hợp lệ, tạo acesstoken mới
+        const accessToken = jwt.sign(
+            {userId: session.userId},
+            process.env.ACCESS_TOKEN_SECRET,
+            {expiresIn: ACCESS_TOKEN_TTL}
+        )
+
+        // Trả về acesstoken qua res
+        return res.status(200).json({accessToken});
+    } catch (error) {
+        console.error("Lỗi khi làm mới token:", error);
+        return res.status(500).json({message: `Lỗi khi làm mới token`});
     }
 }

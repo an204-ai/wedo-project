@@ -67,7 +67,7 @@ export function LoginForm({
                     Quên mật khẩu?
                   </a>
                 </div>
-                <Input id="password" type="password" {...register("password")} required />
+                <Input id="password" type="password" {...register("password")}/>
                 <FieldDescription>
                   {errors.password && <span className="text-red-500">{errors.password.message}</span>}
                 </FieldDescription>

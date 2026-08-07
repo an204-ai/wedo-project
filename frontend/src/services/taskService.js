@@ -1,6 +1,8 @@
 import api from "@/lib/axios";
 
+
 export const fetchTasks = async (dateQuery = "week") => {
+
     const res = await api.get(`/tasks/?filter=${dateQuery}`);
     return res.data;
 }
